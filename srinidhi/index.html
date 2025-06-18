@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- EDIT HERE: Change Niece's Name -->
+    <title>A Super Fun Surprise for Sri!</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --sky-blue: #87CEEB;
+            --sunny-yellow: #FFD700;
+            --grass-green: #7CFC00;
+            --text-color: #4A4A4A;
+            --bright-pink: #FF69B4;
+            --confetti-blue: #1E90FF;
+            --confetti-purple: #9370DB;
+            --confetti-orange: #FFA500;
+        }
+        body {
+            font-family: 'Bubblegum Sans', cursive;
+            background: linear-gradient(to bottom, var(--sky-blue) 70%, #98FB98 100%);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- Animated Scenery --- */
+        .scenery { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            z-index: -1; 
+            overflow: hidden;
+        }
+        .sun {
+            position: absolute; 
+            top: 5%; 
+            right: 5%; 
+            width: 100px; 
+            height: 100px;
+            background: var(--sunny-yellow); 
+            border-radius: 50%;
+            box-shadow: 0 0 40px var(--sunny-yellow);
+            animation: pulse-sun 4s infinite, rotate-sun 20s linear infinite;
+        }
+        .cloud {
+            position: absolute; 
+            background: #fff; 
+            border-radius: 50%; 
+            opacity: 0.9;
+            animation: drift 60s linear infinite;
+        }
+        .cloud:before, .cloud:after { 
+            content: ''; 
+            position: absolute; 
+            background: #fff; 
+            border-radius: 50%; 
+        }
+        .cloud1 { 
+            top: 15%; 
+            left: -200px; 
+            width: 100px; 
+            height: 100px; 
+            animation-duration: 70s; 
+        }
+        .cloud1:before { 
+            width: 60px; 
+            height: 60px; 
+            top: -30px; 
+            left: 20px; 
+        }
+        .cloud1:after { 
+            width: 80px; 
+            height: 80px; 
+            top: -10px; 
+            right: -20px; 
+        }
+        .cloud2 { 
+            top: 25%; 
+            left: -200px; 
+            width: 120px; 
+            height: 120px; 
+            animation-duration: 50s; 
+            animation-delay: -10s; 
+        }
+        .cloud3 {
+            top: 10%; 
+            left: -300px; 
+            width: 150px; 
+            height: 150px; 
+            animation-duration: 80s;
+            animation-delay: -20s;
+        }
+        
+        .balloon {
+            position: fixed; 
+            width: 80px; 
+            height: 100px; 
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            cursor: pointer; 
+            z-index: 10; 
+            bottom: -150px; 
+            animation: float-up 15s linear infinite;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
+            transition: transform 0.3s;
+        }
+        .balloon:after { 
+            content: ''; 
+            position: absolute; 
+            width: 2px; 
+            height: 80px; 
+            background: rgba(0,0,0,0.2); 
+            left: 50%; 
+            bottom: -80px; 
+        }
+        
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            z-index: 999;
+            animation: confetti-fall 5s linear forwards;
+        }
+        
+        /* --- Content Sections --- */
+        .content-section {
+            padding: 50px 20px; 
+            background: rgba(255, 255, 255, 0.7);
+            margin: 40px auto; 
+            border-radius: 30px; 
+            border: 5px solid #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            max-width: 900px; 
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        h1, h2, h3 { 
+            color: var(--bright-pink); 
+            text-shadow: 2px 2px 0 #fff; 
+        }
+
+        /* --- Hero Section with Animated Cartoon --- */
+        .hero { 
+            text-align: center; 
+            padding-top: 50px; 
+            position: relative;
+        }
+        .hero h1 { 
+            font-size: 2.5rem; /* Reduced from 3.5rem */
+            margin-bottom: 20px;
+        }
+        /* Bouncing Title Letters */
+        #title span { 
+            display: inline-block; 
+            animation: titleBounce 1s forwards; 
+            opacity: 0; 
+        }
+        
+        .hero .big-four {
+            font-size: 5rem; /* Reduced from 6rem */
+            color: var(--sunny-yellow); 
+            text-shadow: 4px 4px 0 var(--bright-pink);
+            transition: transform 0.2s; 
+            cursor: pointer; 
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        .hero .big-four:hover { 
+            animation: wiggle 0.5s, pulse 2s infinite; 
+        }
+        
+        .main-cartoon { 
+            width: 180px; /* Reduced from 200px */
+            margin: 20px auto; 
+            animation: bounce 2s infinite ease-in-out, float 6s ease-in-out infinite; 
+            filter: drop-shadow(0 10px 5px rgba(0,0,0,0.1));
+        }
+        
+        /* --- Animated Photo Train --- */
+        .photo-train-container { 
+            display: flex; 
+            align-items: flex-end; 
+            overflow-x: auto; 
+            padding: 20px 0; 
+            white-space: nowrap; 
+            scroll-behavior: smooth;
+        }
+        .train-engine, .train-car { 
+            display: inline-block; 
+            vertical-align: bottom; 
+            margin-right: -10px; 
+            position: relative; 
+        }
+        .train-engine svg, .train-car svg { 
+            width: 150px; 
+            height: auto; 
+        }
+        .train-car { 
+            animation: chug 1s infinite ease-in-out;
+        }
+        .train-engine {
+            animation: chug 1s infinite ease-in-out, puff 3s infinite;
+        }
+        
+        .photo-car {
+            width: 250px; 
+            height: 200px; 
+            background-size: cover; 
+            background-position: center;
+            border: 5px solid #A52A2A; 
+            border-radius: 10px; 
+            position: relative; 
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .photo-car:hover {
+            transform: scale(1.05);
+            z-index: 5;
+        }
+        .photo-car::after { /* Wheels */
+            content: ''; 
+            position: absolute; 
+            width: 40px; 
+            height: 40px;
+            background: #555; 
+            border: 5px solid #888; 
+            border-radius: 50%;
+            bottom: -30px; 
+            left: 30px; 
+            box-shadow: 150px 0 0 #555;
+            animation: rotate-wheel 1s infinite linear;
+        }
+        
+        /* --- Animated Peekaboo Cartoons --- */
+        .peekaboo { 
+            position: absolute; 
+            width: 100px; 
+            transition: transform 0.5s ease-in-out; 
+            z-index: 2;
+        }
+        .peekaboo-bird { 
+            top: -60px; 
+            right: 20px; 
+            animation: float 4s ease-in-out infinite;
+        }
+        .content-section:hover .peekaboo-bird { 
+            animation: peek-flap 0.7s infinite, float 4s ease-in-out infinite; 
+        }
+        .peekaboo-snail { 
+            bottom: -30px; 
+            left: -30px; 
+            transform: rotate(-15deg); 
+            animation: crawl 10s linear infinite;
+        }
+        .content-section:hover .peekaboo-snail { 
+            animation: crawl 10s linear infinite, shell-wiggle 1s infinite;
+        }
+
+        /* --- KEYFRAME ANIMATIONS --- */
+        @keyframes float-up { 
+            to { 
+                bottom: 110vh; 
+                opacity: 0;
+            } 
+        }
+        @keyframes pulse-sun { 
+            50% { 
+                transform: scale(1.1); 
+                box-shadow: 0 0 60px var(--sunny-yellow); 
+            } 
+        }
+        @keyframes rotate-sun {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes drift { 
+            to { 
+                transform: translateX(110vw); 
+            } 
+        }
+        @keyframes bounce { 
+            50% { 
+                transform: translateY(-15px); 
+            } 
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes titleBounce {
+            0% { 
+                transform: scale(0.5) translateY(50px); 
+                opacity: 0; 
+            }
+            50% { 
+                transform: scale(1.1) translateY(0); 
+            }
+            100% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+        }
+        @keyframes wiggle { 
+            0%,100%{transform:rotate(0)} 
+            25%{transform:rotate(5deg)} 
+            75%{transform:rotate(-5deg)} 
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        @keyframes chug { 
+            50% { 
+                transform: translateY(-5px); 
+            } 
+        }
+        @keyframes puff {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-3px) scaleX(1.02); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(-3px) scaleX(0.98); }
+        }
+        @keyframes peek-flap { 
+            50% { 
+                transform: translateY(-10px) rotate(5deg); 
+            } 
+        }
+        @keyframes rotate-wheel {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes crawl {
+            0% { transform: translateX(0) rotate(-15deg); }
+            50% { transform: translateX(20px) rotate(0deg); }
+            100% { transform: translateX(0) rotate(-15deg); }
+        }
+        @keyframes shell-wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+        @keyframes confetti-fall {
+            0% { 
+                transform: translateY(-100vh) rotate(0deg); 
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh) rotate(360deg); 
+                opacity: 0;
+            }
+        }
+        @keyframes sparkle {
+            0% { transform: scale(1); opacity: 0; }
+            50% { transform: scale(1.5); opacity: 1; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scenery">
+        <div class="sun"></div>
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+    </div>
+    
+    <div id="birthday-content">
+        <header class="hero" data-aos="zoom-in">
+            <!-- EDIT HERE: Niece's Name -->
+            <h1 id="title">Happy Birthday Srinidhi</h1>
+            <div class="big-four">4</div>
+            <div class="main-cartoon">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><g fill="#F59E0B"><path d="M100 10c-30 0-50 20-50 50 0 10 10 30 20 40-10 0-30 10-30 30s20 40 60 40c40 0 60-20 60-40s-20-30-30-30c10-10 20-30 20-40 0-30-20-50-50-50z"/><path d="M30 100c-10 0-20-10-20-20s10-20 20-20c5 0 10 5 10 10s-5 30-10 30z" transform="rotate(-20 30 90)"/><path d="M170 100c10 0 20-10 20-20s-10-20-20-20c-5 0-10 5-10 10s5 30 10 30z" transform="rotate(20 170 90)"/></g><g fill="#FFF"><circle cx="75" cy="85" r="10"/><circle cx="125" cy="85" r="10"/><path d="M100 120c20 0 30-10 30-10s-20 20-30 20-30-20-30-20 10 10 30 10z"/></g><g fill="#000"><circle cx="75" cy="85" r="5"/><circle cx="125" cy="85" r="5"/><path d="M100 105c-5 0-10 5-10 5s5 5 10 5 10-5 10-5-5-5-10-5z"/></g></svg>
+            </div>
+        </header>
+
+        <section class="content-section" data-aos="fade-up">
+            <h2>The Birthday Photo Train!</h2>
+            <p>Choo-choo! Look at all our fun memories!</p>
+            <div class="photo-train-container">
+                <div class="train-engine"><svg viewBox="0 0 100 100" width="120"><path fill="#A0522D" d="M20 80 h60 v-20 h-60 z" /><circle cx="50" cy="55" r="25" fill="#CD853F"/><circle cx="40" cy="50" r="5" fill="#FFF"/><circle cx="60" cy="50" r="5" fill="#FFF"/><circle cx="40" cy="50" r="2" fill="#000"/><circle cx="60" cy="50" r="2" fill="#000"/><circle cx="50" cy="65" r="5" fill="#A0522D"/><path d="M10 40 L20 40 L20 50 L10 50 Z" fill="#8B4513"/><path d="M70 40 L80 40 L80 50 L70 50 Z" fill="#8B4513"/></svg></div>
+                <!-- EDIT HERE: Add your photos -->
+                <div class="train-car"><div class="photo-car" style="background-image: url('images/1.jpg')"></div></div>
+                <div class="train-car"><div class="photo-car" style="background-image: url('images/2.jpg')"></div></div>
+                <div class="train-car"><div class="photo-car" style="background-image: url('images/3.jpg')"></div></div>
+                <div class="train-car"><div class="photo-car" style="background-image: url('images/4.jpg')"></div></div>
+            </div>
+        </section>
+
+        <section class="content-section" data-aos="fade-up">
+            <div class="peekaboo peekaboo-bird"><svg viewBox="0 0 100 100"><circle cx="50" cy="60" r="30" fill="#87CEEB"/><circle cx="65" cy="55" r="5" fill="#000"/><path d="M40 70 q20 10 40 0" stroke="#000" stroke-width="2" fill="none"/><path d="M20 60 L50 40 L80 60" fill="#4682B4"/></svg></div>
+            <h2>A Super Special Note</h2>
+            <!-- EDIT HERE: Your personal message -->
+            <p><strong>To the best 4-year-old ever, <span style="color: var(--bright-pink);">Srinidhi!</span></strong></p>
+            <p>Happy, happy birthday! You make the world so much brighter and more fun. I hope your day is full of giggles, games, and your favorite kind of cake!</p>
+            <p>You are smart, funny, and so very kind. Keep being the amazing little superstar you are!</p>
+            <!-- EDIT HERE: Your Name -->
+            <p style="font-size: 1.5rem; text-align: right;">Lots of hugs,<br>pavan</p>
+            <div class="peekaboo peekaboo-snail"><svg viewBox="0 0 100 100"><circle cx="50" cy="70" r="20" fill="#DEB887"/><path d="M50 70 q-20 20 -40 0 v-20 h20" fill="#9ACD32"/><circle cx="20" cy="35" r="3" fill="#000"/><circle cx="35" cy="35"r="3" fill="#000"/></svg></div>
+        </section>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true, offset: 50 });
+
+        // --- Bouncing Title Letters ---
+        const title = document.getElementById('title');
+        const text = title.textContent;
+        title.innerHTML = '';
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i] === ' ' ? ' ' : text[i];
+            title.innerHTML += `<span style="animation-delay: ${i * 0.05}s;">${char}</span>`;
+        }
+
+        // --- Interactive Balloons Logic ---
+        const colors = ['#FF69B4', '#FFD700', '#7CFC00', '#1E90FF', '#9370DB', '#FFA500'];
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.style.left = `${Math.random() * 90}%`;
+            balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            balloon.style.animationDuration = `${Math.random() * 10 + 10}s`;
+            
+            balloon.onclick = function() {
+                this.style.transition = 'transform 0.2s, opacity 0.2s';
+                this.style.transform = 'scale(1.5)';
+                this.style.opacity = '0';
+                createConfetti(this.getBoundingClientRect().left + 40, this.getBoundingClientRect().top + 50);
+                setTimeout(() => this.remove(), 200);
+            };
+            
+            document.body.appendChild(balloon);
+            setTimeout(() => { if (balloon) balloon.remove(); }, 20000);
+        }
+        setInterval(createBalloon, 2000);
+
+        // --- Confetti Effect ---
+        function createConfetti(x = window.innerWidth / 2, y = window.innerHeight / 2) {
+            const colors = ['var(--bright-pink)', 'var(--sunny-yellow)', 'var(--confetti-blue)', 
+                           'var(--confetti-purple)', 'var(--confetti-orange)', 'var(--grass-green)'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${x}px`;
+                confetti.style.top = `${y}px`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.width = `${Math.random() * 10 + 5}px`;
+                confetti.style.height = `${Math.random() * 10 + 5}px`;
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+                
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+
+        // Auto-scroll the train
+        const trainContainer = document.querySelector('.photo-train-container');
+        let scrollDirection = 1;
+        setInterval(() => {
+            if (trainContainer.scrollLeft >= trainContainer.scrollWidth - trainContainer.clientWidth - 10) {
+                scrollDirection = -1;
+            } else if (trainContainer.scrollLeft <= 10) {
+                scrollDirection = 1;
+            }
+            trainContainer.scrollLeft += scrollDirection * 2;
+        }, 50);
+
+        // Add sparkles to the number 4
+        const bigFour = document.querySelector('.big-four');
+        setInterval(() => {
+            const sparkle = document.createElement('div');
+            sparkle.style.position = 'absolute';
+            sparkle.style.width = '10px';
+            sparkle.style.height = '10px';
+            sparkle.style.background = 'radial-gradient(circle, white 30%, transparent 70%)';
+            sparkle.style.borderRadius = '50%';
+            sparkle.style.animation = 'sparkle 1s forwards';
+            
+            // Position randomly around the number
+            const rect = bigFour.getBoundingClientRect();
+            const x = Math.random() * rect.width;
+            const y = Math.random() * rect.height;
+            
+            sparkle.style.left = `${rect.left + x}px`;
+            sparkle.style.top = `${rect.top + y}px`;
+            sparkle.style.pointerEvents = 'none';
+            
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1000);
+        }, 300);
+    </script>
+</body>
+</html>
